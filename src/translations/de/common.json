@@ -1,0 +1,31 @@
+{
+    "navigation": {
+        "home": "Startseite",
+        "contactform": "Kontaktformular",
+        "aboutus": "Über Uns",
+        "imprint": "Impressum",
+        "german": "Deutsch",
+        "english": "Englisch",
+        "french": "Französisch"
+    },
+    "home": {
+        "title": "Hier könnte Ihre Werbung stehen!"
+    },
+    "contact": {
+        "title": "Kontaktformular",
+        "input": {
+            "firstname*": "Vorname*",
+            "lastname*": "Nachname*",
+            "street": "Straße und Hausnummer",
+            "zip": "PLZ",
+            "location": "Ort",
+            "countryselection": "Länderauswahl",
+            "state": "Bundesland",
+            "privacy": "Ich stimme der Datenschutzerklärung zu.",
+            "sendmessage": "Nachricht senden"
+        }    
+    },
+    "nopage": {
+        "title": "Hier ist nichts zu finden!"
+    }
+}

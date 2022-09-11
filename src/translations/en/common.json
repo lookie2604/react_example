@@ -1,0 +1,31 @@
+{
+    "navigation": {
+        "home": "Home",
+        "contactform": "Contact",
+        "aboutus": "About us",
+        "imprint": "Imprint",
+        "german": "German",
+        "english": "English",
+        "french": "French"
+    },
+    "home": {
+        "title": "Here could be your advertising!"
+    },
+    "contact": {
+        "title": "Contact Form",
+        "input": {
+            "firstname*": "Firstname*",
+            "lastname*": "Lastname*",
+            "street": "Street and house number",
+            "zip": "Zip",
+            "location": "Location",
+            "countryselection": "Country selection",
+            "state": "State",
+            "privacy": "I agree to the privacy policy.",
+            "sendmessage": "Send message"
+        }    
+    },
+    "nopage": {
+        "title": "Can't be found here!"
+    }
+}
