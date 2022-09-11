@@ -7,7 +7,6 @@ import Home from './pages/home';
 import i18next from 'i18next';
 import { I18nextProvider } from 'react-i18next';
 import NoPage from './pages/404';
-import phpapi from './api/mail/index.php';
 import React from 'react';
 import * as bootstrap from 'bootstrap';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -56,7 +55,6 @@ root.render(
                                 <NoPage />
                             }
                         />
-                        <Route path={`${process.env.REACT_APP_MAIL_API}`} element={phpapi} />
                     </Routes>
                 </BrowserRouter>
             </div>
