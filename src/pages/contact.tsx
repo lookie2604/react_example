@@ -138,8 +138,8 @@ const Contact: FunctionComponent = () => {
                     <TextInput label={t('contact.input.location')} name='location' RegExp={/^[ .A-Za-zÄÖÜßäöü\-]+$/u} parentCallback={callbackFunction} required={false} />
                     <SelectInput label={t('contact.input.countryselection')} name='countryselection' auswahl={countries} parentCallback={callbackFunction} />
                     <SelectInput label={t('contact.input.state')} name='state' auswahl={provinz} parentCallback={callbackFunction} />
-                    <TextInput label={'phone'} name='phone' RegExp={/^[0-9\-]+$/u} parentCallback={callbackFunction} required={true} />
-                    <TextInput label={t('mail')} name='mail' RegExp={/^[]+$/u} parentCallback={callbackFunction} required={true} />
+                    <TextInput label={t('contact.input.phone')} name='phone' RegExp={/^[0-9\-]+$/u} parentCallback={callbackFunction} required={true} />
+                    <TextInput label={t('contact.input.mail')} name='mail' RegExp={/^[]+$/u} parentCallback={callbackFunction} required={true} />
                     <CheckInput label={t('contact.input.privacy')} name='privacy' parentCallback={callbackFunction} />
                     <div className='form-group col-12 mt-4 mb-4'>
                         <Reaptcha sitekey='6Lf6NrEhAAAAAHVrsoBNfgsvzMmoQqvA9qnX2pzj' ref={captchaRef} onVerify={handleVerify} />
