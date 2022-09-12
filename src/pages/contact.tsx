@@ -102,7 +102,7 @@ const Contact: FunctionComponent = () => {
             <div className='row'>
                 <ToastContainer />
                 <h1 className='text-center'>{t('contact.title')}</h1>
-                <div className='mt-4'>
+                <div className='d-flex flex-row flex-wrap justify-content-between mt-4'>
                     <TextInput label={t('contact.input.firstname*')} name='firstname' RegExp={/^[ .A-Za-zÄÖÜßäöü\-]+$/u} parentCallback={callbackFunction} />
                     <TextInput label={t('contact.input.lastname*')} name='lastname' RegExp={/^[ .A-Za-zÄÖÜßäöü\-]+$/u} parentCallback={callbackFunction} />
                     <TextInput label={t('contact.input.street')} name='street' RegExp={/^[\d .A-Za-zÄÖÜßäöü\-]+$/u} parentCallback={callbackFunction} />
