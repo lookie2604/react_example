@@ -7,22 +7,23 @@ import Reaptcha from 'reaptcha';
 import SelectInput from '../core-components/input/selectInput';
 import TextInput from '../core-components/input/textInput';
 import { useTranslation } from 'react-i18next';
-import React, { Fragment, FunctionComponent, useEffect, useRef, useState } from 'react';
+import React, { Fragment, FunctionComponent, useEffect, useId, useRef, useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 
 const Contact: FunctionComponent = () => {
-    const [forminput, setFormInput] = useState({});
-    const [inputrequired, setInputRequired] = useState({});
+    const [forminput, setFormInput] = useState<Array<string>>([]);
+    const [inputrequired, setInputRequired] = useState<Array<string>>([]);
     const countries = ['Auswahl', 'Deutschland', 'Polen', 'Österreich', 'Schweiz', 'Frankreich'];
     const provinz = ['Auswahl', 'Berlin', 'Brandenburg', 'Sachsen', 'Hessen', 'Bremen'];
     const [t, i18n] = useTranslation('common');
     const captchaRef = useRef<Reaptcha>(null);
     const [token, setToken] = useState<string>('');
-
     const [mail, setMail] = useState<boolean>();
     const [error, setError] = useState();
+    const [count, setCount] = useState<number>(0);
+    const id = useId();
 
-    const callbackFunction = (inputname: string, inputvalue: string | boolean, required: string): void => {
+    const callbackFunction = (inputname: string, inputvalue: string | boolean, inputrequired: string): void => {
         const name: string = inputname;
         const value: string | boolean = inputvalue;
 
@@ -30,7 +31,7 @@ const Contact: FunctionComponent = () => {
             prevState => (
                 {
                     ...prevState,
-                    [name]: required
+                    [name]: inputrequired
                 }
             )
         );
@@ -104,6 +105,18 @@ const Contact: FunctionComponent = () => {
                         setError(error.message.sent);
                     }
                     // console.log(error.config);
+                    if (error) {
+                        toast.error(error, {
+                            position: "top-center",
+                            autoClose: 7000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                        });
+                    }
+                    else { }
                 });
         }
     };
@@ -117,19 +130,9 @@ const Contact: FunctionComponent = () => {
     };
 
     useEffect(() => {
-        if(error){
-            toast.error(error, {
-                position: "top-center",
-                autoClose: 7000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
-        }
-        else{}
-    },[error]);
+        console.log(forminput);
+        console.log(inputrequired);
+    });
 
     return (
         <Fragment>
@@ -138,20 +141,20 @@ const Contact: FunctionComponent = () => {
                 <ToastContainer />
                 <h1 className='text-center'>{t('contact.title')}</h1>
                 <div className='d-flex flex-row flex-wrap justify-content-between mt-4'>
-                    <TextInput label={t('contact.input.firstname*')} name='firstname' RegExp={/^[ .A-Za-zÄÖÜßäöü\-]+$/u} parentCallback={callbackFunction} required={true} />
-                    <TextInput label={t('contact.input.lastname*')} name='lastname' RegExp={/^[ .A-Za-zÄÖÜßäöü\-]+$/u} parentCallback={callbackFunction} required={true} />
-                    <TextInput label={t('contact.input.street')} name='street' RegExp={/^[\d .A-Za-zÄÖÜßäöü\-]+$/u} parentCallback={callbackFunction} required={false} />
-                    <TextInput label={t('contact.input.zip')} name='zip' RegExp={/^[\d ]+$/u} parentCallback={callbackFunction} required={false} />
-                    <TextInput label={t('contact.input.location')} name='location' RegExp={/^[ .A-Za-zÄÖÜßäöü\-]+$/u} parentCallback={callbackFunction} required={false} />
-                    <SelectInput label={t('contact.input.countryselection')} name='countryselection' auswahl={countries} parentCallback={callbackFunction} />
-                    <SelectInput label={t('contact.input.state')} name='state' auswahl={provinz} parentCallback={callbackFunction} />
-                    <TextInput label={t('contact.input.phone')} name='phone' RegExp={/^[0-9\-]+$/u} parentCallback={callbackFunction} required={true} />
-                    <TextInput label={t('contact.input.mail')} name='mail' RegExp={/^[]+$/u} parentCallback={callbackFunction} required={true} />
-                    <CheckInput label={t('contact.input.privacy')} name='privacy' parentCallback={callbackFunction} />
+                    <TextInput label={t('contact.input.firstname*')} name={id + 'firstname'} RegExp={/^[ .A-Za-zÄÖÜßäöü\-]+$/u} parentCallback={callbackFunction} required={true} />
+                    <TextInput label={t('contact.input.lastname*')} name={id + 'lastname'} RegExp={/^[ .A-Za-zÄÖÜßäöü\-]+$/u} parentCallback={callbackFunction} required={true} />
+                    <TextInput label={t('contact.input.street')} name={id + 'street'} RegExp={/^[\d .A-Za-zÄÖÜßäöü\-]+$/u} parentCallback={callbackFunction} required={false} />
+                    <TextInput label={t('contact.input.zip')} name={id + 'zip'} RegExp={/^[\d ]+$/u} parentCallback={callbackFunction} required={false} />
+                    <TextInput label={t('contact.input.location')} name={id + 'location'} RegExp={/^[ .A-Za-zÄÖÜßäöü\-]+$/u} parentCallback={callbackFunction} required={false} />
+                    <SelectInput label={t('contact.input.countryselection')} name={id + 'countryselection'} auswahl={countries} parentCallback={callbackFunction} />
+                    <SelectInput label={t('contact.input.state')} name={id + 'state'} auswahl={provinz} parentCallback={callbackFunction} />
+                    <TextInput label={t('contact.input.phone')} name={id + 'phone'} RegExp={/^[0-9\-]+$/u} parentCallback={callbackFunction} required={true} />
+                    <TextInput label={t('contact.input.mail')} name={id + 'mail'} RegExp={/^[]+$/u} parentCallback={callbackFunction} required={true} />
+                    <CheckInput label={t('contact.input.privacy')} name={id + 'privacy'} parentCallback={callbackFunction} />
                     <div className='form-group col-12 mt-4 mb-4'>
                         <Reaptcha sitekey='6Lf6NrEhAAAAAHVrsoBNfgsvzMmoQqvA9qnX2pzj' ref={captchaRef} onVerify={handleVerify} />
                     </div>
-                    <ButtonInput className='btn btn-primary' name='mailsend' value={t('contact.input.sendmessage')} onClick={handleSubmit} />
+                    <ButtonInput className='btn btn-primary' name={id + 'mailsend'} value={t('contact.input.sendmessage')} onClick={handleSubmit} />
                 </div>
             </div>
             <div className='footer'>

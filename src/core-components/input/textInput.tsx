@@ -32,6 +32,7 @@ const TextInput: FunctionComponent<TextInputProps> = ({ label, name, RegExp, par
             parentCallback(name, event.target.value, 'empty');
         }
         else{
+            setRequiredInput(false);
             parentCallback(name, event.target.value, '');
         }
     };
