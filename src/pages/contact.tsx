@@ -89,7 +89,7 @@ const Contact: FunctionComponent = () => {
         // console.log(error);
         //console.log(mail);
         if(mail){
-            toast.success('Nachricht erfolgreich versendet!', {
+            toast.success(t('contact.message.success'), {
                 position: "top-center",
                 autoClose: 7000,
                 hideProgressBar: false,
