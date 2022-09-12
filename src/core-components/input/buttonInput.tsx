@@ -1,15 +1,15 @@
 import React, { FunctionComponent, ReactElement } from 'react';
 
-interface SubmitInputProps {
+interface ButtonInputProps {
     className: string
     name: string;
     value: string;
 }
 
-const SubmitInput: FunctionComponent<SubmitInputProps> = ({ name, value, className }): ReactElement => (
+const ButtonInput: FunctionComponent<ButtonInputProps> = ({ name, value, className }): ReactElement => (
     <div className='form-group col-12 mt-5'>
         <input type='button' id={`${name}input`} name={name} className={className} value={value} />
     </div>
 );
 
-export default SubmitInput;
+export default ButtonInput;
