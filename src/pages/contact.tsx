@@ -7,7 +7,7 @@ import Reaptcha from 'reaptcha';
 import SelectInput from '../core-components/input/selectInput';
 import TextInput from '../core-components/input/textInput';
 import { useTranslation } from 'react-i18next';
-import React, { ChangeEvent, Fragment, FunctionComponent, MouseEventHandler, useEffect, useRef, useState } from 'react';
+import React, { Fragment, FunctionComponent, useEffect, useRef, useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 
 const Contact: FunctionComponent = () => {
@@ -51,7 +51,7 @@ const Contact: FunctionComponent = () => {
                 forminput
             )
                 .then((response) => {
-                    setMail(response.data.message);
+                    setMail(response.data.sent);
                     console.log(response.status);
                     console.log(response.statusText);
                     console.log(response.headers);
@@ -85,6 +85,28 @@ const Contact: FunctionComponent = () => {
         // console.log(token);
         // console.log(error);
         console.log(mail);
+        if(mail){
+            toast.success('Nachricht erfolgreich versendet!', {
+                position: "top-center",
+                autoClose: 7000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
+        else{
+            toast.error(error, {
+                position: "top-center",
+                autoClose: 7000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
     }, [mail]);
 
     return (
