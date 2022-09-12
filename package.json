@@ -1,6 +1,10 @@
 {
   "name": "react-examples",
   "version": "0.1.0",
+  "description": "This project outputs a multi-site homepage. Various data can be processed in connection with a PHP page as an API, in this example a contact form is used. Among other things, react-i18next (translation), bootstrap (style), axios (promise-based HTTP client), react-toastify (notification display), reaptcha (Google reCAPTCHA), react-router-dom (routing in the browser) are used.",
+  "main": "index.tsx",
+  "author": "Sven Oeftger",
+  "license": "MIT",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",

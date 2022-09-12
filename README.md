@@ -7,6 +7,9 @@ Among other things, react-i18next (translation), bootstrap (style), axios (promi
 In the directory of the PHP files, start the PHP server with the following call from the command prompt:
 php -S localhost:8000
 
+## Execution
+On first boot, the dependencies must be installed using the npm install command.
+
 ## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
