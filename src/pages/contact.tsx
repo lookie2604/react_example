@@ -18,7 +18,7 @@ const Contact: FunctionComponent = () => {
     const captchaRef = useRef<Reaptcha>(null);
     const [token, setToken] = useState<string>('');
 
-    const [mail, setMail] = useState<any>();
+    const [mail, setMail] = useState<boolean>();
     const [error, setError] = useState();
 
     const callbackFunction = (inputname: string, inputvalue: string | boolean): void => {
@@ -27,12 +27,14 @@ const Contact: FunctionComponent = () => {
 
         setFormInput(
             prevState => (
-                { ...prevState, [name]: value }
+                { ...prevState,
+                    [name]: value }
             )
         );
     };
 
     const handleSubmit= (event) => {
+
         if (!token) {
             event.preventDefault();
         }
@@ -84,10 +86,6 @@ const Contact: FunctionComponent = () => {
     };
 
     useEffect(() => {
-        // console.log(forminput);
-        // console.log(token);
-        console.log(error);
-        console.log(mail);
         if(mail){
             toast.success(t('contact.message.success'), {
                 position: "top-center",
@@ -122,7 +120,7 @@ const Contact: FunctionComponent = () => {
             });
         }
         else{}
-    }, [mail, error]);
+    }, [setMail, setError]);
 
     return (
         <Fragment>
