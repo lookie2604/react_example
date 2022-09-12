@@ -1,5 +1,5 @@
 <?php
-// php -S localhost:8000
+// cmd - ausführung im php-order - php -S localhost:8000
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 

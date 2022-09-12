@@ -47,12 +47,13 @@ const Contact: FunctionComponent = () => {
                 },
             });*/
             const instance = axios.create({
-                            timeout: 5000,
-                            headers: { 'Content-Type': 'application/json' },
-                            withCredentials: true,
-                            maxContentLength: 5000,
-                            maxBodyLength: 5000,
-                       });
+                baseURL: 'http://localhost:8000/api/mail/',
+                timeout: 5000,
+                headers: { 'Content-Type': 'application/json' },
+                withCredentials: false,
+                maxContentLength: 5000,
+                maxBodyLength: 5000,
+            });
            
             instance.post(
                 'http://localhost:8000/api/mail/',
@@ -101,7 +102,7 @@ const Contact: FunctionComponent = () => {
             <div className='row'>
                 <ToastContainer />
                 <h1 className='text-center'>{t('contact.title')}</h1>
-                <form className='mt-4' onSubmit={handleSubmit}>
+                <div className='mt-4'>
                     <TextInput label={t('contact.input.firstname*')} name='firstname' RegExp={/^[ .A-Za-zÄÖÜßäöü\-]+$/u} parentCallback={callbackFunction} />
                     <TextInput label={t('contact.input.lastname*')} name='lastname' RegExp={/^[ .A-Za-zÄÖÜßäöü\-]+$/u} parentCallback={callbackFunction} />
                     <TextInput label={t('contact.input.street')} name='street' RegExp={/^[\d .A-Za-zÄÖÜßäöü\-]+$/u} parentCallback={callbackFunction} />
@@ -110,11 +111,11 @@ const Contact: FunctionComponent = () => {
                     <SelectInput label={t('contact.input.countryselection')} name='countryselection' auswahl={countries} parentCallback={callbackFunction} />
                     <SelectInput label={t('contact.input.state')} name='state' auswahl={provinz} parentCallback={callbackFunction} />
                     <CheckInput label={t('contact.input.privacy')} name='privacy' parentCallback={callbackFunction} />
-                    <div className='form-group col-12 mt-2'>
+                    <div className='form-group col-12 mt-4 mb-4'>
                         <Reaptcha sitekey='6Lf6NrEhAAAAAHVrsoBNfgsvzMmoQqvA9qnX2pzj' ref={captchaRef} onVerify={handleVerify} />
                     </div>
-                    <SubmitInput name='mailsend' value={t('contact.input.sendmessage')} />
-                </form>
+                    <input type="button" className="btn btn-primary" name='mailsend' value={t('contact.input.sendmessage')} onClick={handleSubmit} />
+                </div>
             </div>
             <div className='footer'>
                 <LanguageButton />
