@@ -68,7 +68,7 @@ const Contact: FunctionComponent = () => {
                         setError(error.request);
                     } else {
                         // console.log('Error', error.message);
-                        setError(error.error.message);
+                        setError(error.message.sent);
                     }
                     // console.log(error.config);
                 });
@@ -86,8 +86,8 @@ const Contact: FunctionComponent = () => {
     useEffect(() => {
         // console.log(forminput);
         // console.log(token);
-        // console.log(error);
-        //console.log(mail);
+        console.log(error);
+        console.log(mail);
         if(mail){
             toast.success(t('contact.message.success'), {
                 position: "top-center",
@@ -100,6 +100,17 @@ const Contact: FunctionComponent = () => {
             });
         }
         else{
+            toast.error('Bitte füllen Sie alle erforderlichen Felder aus!', {
+                position: "top-center",
+                autoClose: 7000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
+        if(error){
             toast.error(error, {
                 position: "top-center",
                 autoClose: 7000,
@@ -110,7 +121,8 @@ const Contact: FunctionComponent = () => {
                 progress: undefined,
             });
         }
-    }, [mail]);
+        else{}
+    }, [mail, error]);
 
     return (
         <Fragment>
@@ -119,13 +131,15 @@ const Contact: FunctionComponent = () => {
                 <ToastContainer />
                 <h1 className='text-center'>{t('contact.title')}</h1>
                 <div className='d-flex flex-row flex-wrap justify-content-between mt-4'>
-                    <TextInput label={t('contact.input.firstname*')} name='firstname' RegExp={/^[ .A-Za-zÄÖÜßäöü\-]+$/u} parentCallback={callbackFunction} />
-                    <TextInput label={t('contact.input.lastname*')} name='lastname' RegExp={/^[ .A-Za-zÄÖÜßäöü\-]+$/u} parentCallback={callbackFunction} />
-                    <TextInput label={t('contact.input.street')} name='street' RegExp={/^[\d .A-Za-zÄÖÜßäöü\-]+$/u} parentCallback={callbackFunction} />
-                    <TextInput label={t('contact.input.zip')} name='zip' RegExp={/^[\d ]+$/u} parentCallback={callbackFunction} />
-                    <TextInput label={t('contact.input.location')} name='location' RegExp={/^[ .A-Za-zÄÖÜßäöü\-]+$/u} parentCallback={callbackFunction} />
+                    <TextInput label={t('contact.input.firstname*')} name='firstname' RegExp={/^[ .A-Za-zÄÖÜßäöü\-]+$/u} parentCallback={callbackFunction} required={true} />
+                    <TextInput label={t('contact.input.lastname*')} name='lastname' RegExp={/^[ .A-Za-zÄÖÜßäöü\-]+$/u} parentCallback={callbackFunction} required={true} />
+                    <TextInput label={t('contact.input.street')} name='street' RegExp={/^[\d .A-Za-zÄÖÜßäöü\-]+$/u} parentCallback={callbackFunction} required={false} />
+                    <TextInput label={t('contact.input.zip')} name='zip' RegExp={/^[\d ]+$/u} parentCallback={callbackFunction} required={false} />
+                    <TextInput label={t('contact.input.location')} name='location' RegExp={/^[ .A-Za-zÄÖÜßäöü\-]+$/u} parentCallback={callbackFunction} required={false} />
                     <SelectInput label={t('contact.input.countryselection')} name='countryselection' auswahl={countries} parentCallback={callbackFunction} />
                     <SelectInput label={t('contact.input.state')} name='state' auswahl={provinz} parentCallback={callbackFunction} />
+                    <TextInput label={'phone'} name='phone' RegExp={/^[0-9\-]+$/u} parentCallback={callbackFunction} required={true} />
+                    <TextInput label={t('mail')} name='mail' RegExp={/^[]+$/u} parentCallback={callbackFunction} required={true} />
                     <CheckInput label={t('contact.input.privacy')} name='privacy' parentCallback={callbackFunction} />
                     <div className='form-group col-12 mt-4 mb-4'>
                         <Reaptcha sitekey='6Lf6NrEhAAAAAHVrsoBNfgsvzMmoQqvA9qnX2pzj' ref={captchaRef} onVerify={handleVerify} />

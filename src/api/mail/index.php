@@ -14,9 +14,7 @@ $_POST = json_decode($restJson, true);
 
 if ($_POST) {
     http_response_code(200);
-    echo json_encode(array(
-        "sent" => true, "message" => $_POST
-    ));
+    echo json_encode(["sent" => true, "message" => $_POST]);
 }
 else {
     echo json_encode(["sent" => false, "message" => "Something went wrong"]);

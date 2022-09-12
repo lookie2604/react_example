@@ -6,15 +6,17 @@ interface TextInputProps {
     name: string;
     RegExp: RegExp;
     parentCallback: Function;
+    required: boolean;
 }
 
-const TextInput: FunctionComponent<TextInputProps> = ({ label, name, RegExp, parentCallback }): ReactElement => {
-    const [inputvalue, setInputValue] = useState<string>(' ');
+const TextInput: FunctionComponent<TextInputProps> = ({ label, name, RegExp, parentCallback, required }): ReactElement => {
+    const [inputvalue, setInputValue] = useState<string>('');
     const [error, setError] = useState<boolean>(false);
     const [message, setMessage] = useState<string>('');
+    const [requiredInput, setRequiredInput] = useState<boolean>(false);
     const pattern: RegExp = RegExp;
 
-    const handleChange = event => {
+    const handleChange = (event) => {
         if (pattern.test(event.target.value) && event.target.value !== '') {
             setError(false);
             parentCallback(name, event.target.value);
@@ -24,16 +26,22 @@ const TextInput: FunctionComponent<TextInputProps> = ({ label, name, RegExp, par
         setInputValue(event.target.value);
     };
 
+    const handleBlur = (event) => {
+        if (event.target.value === '' && event.target.required === true){
+            setRequiredInput(true);
+        }
+    };
+
     useEffect(() => {
         setTimeout(() => {
-            setMessage(error ? 'Es liegt ein Fehler vor!' : '');
+            setMessage(error ? 'Es liegt ein Fehler vor!' : requiredInput ? 'Dieses Feld ist erforderlich!' : '');
         }, 500);
     });
 
     return (
         <div className='form-group col-6'>
             <label htmlFor={`${name}input`}>{label}</label>
-            <input type='text' className='form-control' id={`${name}input`} name={name} value={inputvalue} onChange={handleChange} />
+            <input type='text' className='form-control' id={`${name}input`} name={name} value={inputvalue} onChange={handleChange} onBlur={handleBlur} required={required} />
             <Message name={`error_${name}`} error={message} />
         </div>
     );
