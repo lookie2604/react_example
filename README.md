@@ -1,3 +1,8 @@
+# React-Example
+
+Dieses Projekt gibt eine Multi-Site Homepage aus. In Verbindung mit einer PHP-Seite als API kann man verschiedene Daten verarbeiten, in diesem Beispiel wird ein Kontaktformular genutzt.
+Genutzt wird unter anderem react-i18next (Übersetzung), Bootstrap (Style), axios (Promise-basierter HTTP-Client), react-toastify (Benachrichtigungsanzeige), reaptcha (Google reCAPTCHA), react-router-dom (Routing im Browser).
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
