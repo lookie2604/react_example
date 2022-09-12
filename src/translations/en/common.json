@@ -23,7 +23,10 @@
             "state": "State",
             "privacy": "I agree to the privacy policy.",
             "sendmessage": "Send message"
-        }    
+        },
+        "message": {
+            "success": "Message sent successfully!"
+        }
     },
     "nopage": {
         "title": "Can't be found here!"

@@ -23,7 +23,10 @@
             "state": "Bundesland",
             "privacy": "Ich stimme der Datenschutzerklärung zu.",
             "sendmessage": "Nachricht senden"
-        }    
+        },
+        "message": {
+            "success": "Nachricht erfolgreich versendet!"
+        }
     },
     "nopage": {
         "title": "Hier ist nichts zu finden!"

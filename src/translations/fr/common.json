@@ -23,7 +23,10 @@
             "state": "Etat fédéral",
             "privacy": "J'accepte la politique de confidentialité.",
             "sendmessage": "Envoyer le message"
-        }    
+        },
+        "message": {
+            "success": "Message envoyé avec succès!"
+        }
     },
     "nopage": {
         "title": "Introuvable ici !"
