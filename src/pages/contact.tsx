@@ -34,7 +34,7 @@ const Contact: FunctionComponent = () => {
 
     const handleSubmit= (event) => {
         if (!token) {
-            sevent.preventDefault();
+            event.preventDefault();
         }
         else {
             const instance = axios.create({
