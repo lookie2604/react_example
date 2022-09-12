@@ -12,6 +12,7 @@ import { toast, ToastContainer } from 'react-toastify';
 
 const Contact: FunctionComponent = () => {
     const [forminput, setFormInput] = useState({});
+    const [inputrequired, setInputRequired] = useState({});
     const countries = ['Auswahl', 'Deutschland', 'Polen', 'Österreich', 'Schweiz', 'Frankreich'];
     const provinz = ['Auswahl', 'Berlin', 'Brandenburg', 'Sachsen', 'Hessen', 'Bremen'];
     const [t, i18n] = useTranslation('common');
@@ -21,9 +22,18 @@ const Contact: FunctionComponent = () => {
     const [mail, setMail] = useState<boolean>();
     const [error, setError] = useState();
 
-    const callbackFunction = (inputname: string, inputvalue: string | boolean): void => {
+    const callbackFunction = (inputname: string, inputvalue: string | boolean, required: string): void => {
         const name: string = inputname;
         const value: string | boolean = inputvalue;
+
+        setInputRequired(
+            prevState => (
+                {
+                    ...prevState,
+                    [name]: required
+                }
+            )
+        );
 
         setFormInput(
             prevState => (
@@ -34,7 +44,6 @@ const Contact: FunctionComponent = () => {
     };
 
     const handleSubmit= (event) => {
-
         if (!token) {
             event.preventDefault();
         }
@@ -54,6 +63,28 @@ const Contact: FunctionComponent = () => {
             )
                 .then((response) => {
                     setMail(response.data.sent);
+                    if (mail) {
+                        toast.success(t('contact.message.success'), {
+                            position: "top-center",
+                            autoClose: 7000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                        });
+                    }
+                    else {
+                        toast.error('Bitte füllen Sie alle erforderlichen Felder aus!', {
+                            position: "top-center",
+                            autoClose: 7000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                        });
+                    }
                     // console.log(response.status);
                     // console.log(response.statusText);
                     // console.log(response.headers);
@@ -86,28 +117,6 @@ const Contact: FunctionComponent = () => {
     };
 
     useEffect(() => {
-        if(mail){
-            toast.success(t('contact.message.success'), {
-                position: "top-center",
-                autoClose: 7000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
-        }
-        else{
-            toast.error('Bitte füllen Sie alle erforderlichen Felder aus!', {
-                position: "top-center",
-                autoClose: 7000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
-        }
         if(error){
             toast.error(error, {
                 position: "top-center",
@@ -120,7 +129,7 @@ const Contact: FunctionComponent = () => {
             });
         }
         else{}
-    }, [setMail, setError]);
+    },[error]);
 
     return (
         <Fragment>

@@ -17,9 +17,9 @@ const TextInput: FunctionComponent<TextInputProps> = ({ label, name, RegExp, par
     const pattern: RegExp = RegExp;
 
     const handleChange = (event) => {
-        if (pattern.test(event.target.value) && event.target.value !== '') {
+        if (pattern.test(event.target.value) && event.target.value !== '' && event.target.required === true) {
             setError(false);
-            parentCallback(name, event.target.value);
+            parentCallback(name, event.target.value, '');
         } else {
             setError(true);
         }
@@ -29,6 +29,10 @@ const TextInput: FunctionComponent<TextInputProps> = ({ label, name, RegExp, par
     const handleBlur = (event) => {
         if (event.target.value === '' && event.target.required === true){
             setRequiredInput(true);
+            parentCallback(name, event.target.value, 'empty');
+        }
+        else{
+            parentCallback(name, event.target.value, '');
         }
     };
 
