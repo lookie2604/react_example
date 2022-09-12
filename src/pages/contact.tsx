@@ -1,15 +1,14 @@
-import $ from "jquery";
 import axios from 'axios';
 import CheckInput from '../core-components/input/checkInput';
 import LanguageButton from '../core-components/sections/languageButton';
 import Navigation from '../core-components/sections/navigation';
 import Reaptcha from 'reaptcha';
 import SelectInput from '../core-components/input/selectInput';
-import SubmitInput from '../core-components/input/submitInput';
 import TextInput from '../core-components/input/textInput';
 import { useTranslation } from 'react-i18next';
-import React, { Fragment, FunctionComponent, useEffect, useRef, useState } from 'react';
+import React, { ChangeEvent, Fragment, FunctionComponent, MouseEventHandler, useEffect, useRef, useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
+import ButtonInput from "../core-components/input/buttonInput";
 
 const Contact: FunctionComponent = () => {
     const [forminput, setFormInput] = useState({});
@@ -33,19 +32,11 @@ const Contact: FunctionComponent = () => {
         );
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit= (event) => {
         if (!token) {
-            event.preventDefault();
+            sevent.preventDefault();
         }
         else {
-            /*$.ajax({
-                type: 'POST',
-                url: 'http://localhost:8000/api/mail/',
-                data: forminput,
-                success(data) {
-                    setMail(data);
-                },
-            });*/
             const instance = axios.create({
                 baseURL: 'http://localhost:8000/api/mail/',
                 timeout: 5000,
@@ -114,7 +105,7 @@ const Contact: FunctionComponent = () => {
                     <div className='form-group col-12 mt-4 mb-4'>
                         <Reaptcha sitekey='6Lf6NrEhAAAAAHVrsoBNfgsvzMmoQqvA9qnX2pzj' ref={captchaRef} onVerify={handleVerify} />
                     </div>
-                    <input type="button" className="btn btn-primary" name='mailsend' value={t('contact.input.sendmessage')} onClick={handleSubmit} />
+                    <ButtonInput className='btn btn-primary' name='mailsend' value={t('contact.input.sendmessage')} onClick={handleSubmit} />
                 </div>
             </div>
             <div className='footer'>
