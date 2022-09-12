@@ -1,4 +1,5 @@
 import axios from 'axios';
+import ButtonInput from "../core-components/input/buttonInput";
 import CheckInput from '../core-components/input/checkInput';
 import LanguageButton from '../core-components/sections/languageButton';
 import Navigation from '../core-components/sections/navigation';
@@ -8,7 +9,6 @@ import TextInput from '../core-components/input/textInput';
 import { useTranslation } from 'react-i18next';
 import React, { ChangeEvent, Fragment, FunctionComponent, MouseEventHandler, useEffect, useRef, useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
-import ButtonInput from "../core-components/input/buttonInput";
 
 const Contact: FunctionComponent = () => {
     const [forminput, setFormInput] = useState({});
