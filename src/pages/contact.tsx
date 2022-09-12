@@ -52,22 +52,25 @@ const Contact: FunctionComponent = () => {
             )
                 .then((response) => {
                     setMail(response.data.sent);
-                    console.log(response.status);
-                    console.log(response.statusText);
-                    console.log(response.headers);
-                    console.log(response.config);
+                    // console.log(response.status);
+                    // console.log(response.statusText);
+                    // console.log(response.headers);
+                    // console.log(response.config);
                 })
                 .catch((error) => {
                     if (error.response) {
-                        console.log(error.response.data);
-                        console.log(error.response.status);
-                        console.log(error.response.headers);
+                        // console.log(error.response.data);
+                        // console.log(error.response.status);
+                        // console.log(error.response.headers);
+                        setError(error.response.data);
                     } else if (error.request) {
-                        console.log(error.request);
+                        // console.log(error.request);
+                        setError(error.request);
                     } else {
-                        console.log('Error', error.message);
+                        // console.log('Error', error.message);
+                        setError(error.error.message);
                     }
-                    console.log(error.config);
+                    // console.log(error.config);
                 });
         }
     };
@@ -84,7 +87,7 @@ const Contact: FunctionComponent = () => {
         // console.log(forminput);
         // console.log(token);
         // console.log(error);
-        console.log(mail);
+        //console.log(mail);
         if(mail){
             toast.success('Nachricht erfolgreich versendet!', {
                 position: "top-center",
