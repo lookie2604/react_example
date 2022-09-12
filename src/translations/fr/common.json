@@ -21,6 +21,8 @@
             "location": "Emplacement",
             "countryselection": "Sélection de pays",
             "state": "Etat fédéral",
+            "phone": "Téléphoner",
+            "mail": "E-Mail",
             "privacy": "J'accepte la politique de confidentialité.",
             "sendmessage": "Envoyer le message"
         },

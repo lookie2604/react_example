@@ -21,6 +21,8 @@
             "location": "Location",
             "countryselection": "Country selection",
             "state": "State",
+            "phone": "Phone",
+            "mail": "E-Mail",
             "privacy": "I agree to the privacy policy.",
             "sendmessage": "Send message"
         },

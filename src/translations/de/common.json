@@ -21,6 +21,8 @@
             "location": "Ort",
             "countryselection": "Länderauswahl",
             "state": "Bundesland",
+            "phone": "Telefon",
+            "mail": "E-Mail",
             "privacy": "Ich stimme der Datenschutzerklärung zu.",
             "sendmessage": "Nachricht senden"
         },
