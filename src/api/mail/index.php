@@ -5,11 +5,11 @@ ini_set('display_errors', 1);
 
 header('Access-Control-Allow-Origin: http://localhost:3000');
 header("Access-Control-Allow-Headers: *");
-header("Access-Control-Allow-Methods: *");
+header("Access-Control-Allow-Methods: post");
 header("Access-Control-Allow-Headers: Content-Disposition, Content-Type, Content-Length, Accept-Encoding");
-//header("Content-type:application/json");
+header("Content-type:application/json");
 
-/*$restJson = file_get_contents("php://input");
+$restJson = file_get_contents("php://input");
 $_POST = json_decode($restJson, true);
 
 if ($_POST) {
@@ -17,8 +17,9 @@ if ($_POST) {
     echo json_encode(array(
         "sent" => true, "message" => $_POST
     ));
-} else {
+}
+else {
     echo json_encode(["sent" => false, "message" => "Something went wrong"]);
 }
-*/
 
+?>

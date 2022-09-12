@@ -38,14 +38,45 @@ const Contact: FunctionComponent = () => {
             event.preventDefault();
         }
         else {
-            $.ajax({
+            /*$.ajax({
                 type: 'POST',
                 url: 'http://localhost:8000/api/mail/',
                 data: forminput,
                 success(data) {
                     setMail(data);
                 },
-            });
+            });*/
+            const instance = axios.create({
+                            timeout: 5000,
+                            headers: { 'Content-Type': 'application/json' },
+                            withCredentials: true,
+                            maxContentLength: 5000,
+                            maxBodyLength: 5000,
+                       });
+           
+            instance.post(
+                'http://localhost:8000/api/mail/',
+                forminput
+            )
+                .then((response) => {
+                    setMail(response.data.message);
+                    console.log(response.status);
+                    console.log(response.statusText);
+                    console.log(response.headers);
+                    console.log(response.config);
+                })
+                .catch((error) => {
+                    if (error.response) {
+                        console.log(error.response.data);
+                        console.log(error.response.status);
+                        console.log(error.response.headers);
+                    } else if (error.request) {
+                        console.log(error.request);
+                    } else {
+                        console.log('Error', error.message);
+                    }
+                    console.log(error.config);
+                });
         }
     };
 
@@ -70,7 +101,7 @@ const Contact: FunctionComponent = () => {
             <div className='row'>
                 <ToastContainer />
                 <h1 className='text-center'>{t('contact.title')}</h1>
-                <form method='post' action='http://localhost:8000/api/mail/' className='mt-4' onSubmit={handleSubmit}>
+                <form className='mt-4' onSubmit={handleSubmit}>
                     <TextInput label={t('contact.input.firstname*')} name='firstname' RegExp={/^[ .A-Za-zÄÖÜßäöü\-]+$/u} parentCallback={callbackFunction} />
                     <TextInput label={t('contact.input.lastname*')} name='lastname' RegExp={/^[ .A-Za-zÄÖÜßäöü\-]+$/u} parentCallback={callbackFunction} />
                     <TextInput label={t('contact.input.street')} name='street' RegExp={/^[\d .A-Za-zÄÖÜßäöü\-]+$/u} parentCallback={callbackFunction} />
