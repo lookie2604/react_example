@@ -5,6 +5,7 @@ import LanguageButton from '../core-components/sections/languageButton';
 import Navigation from '../core-components/sections/navigation';
 import Reaptcha from 'reaptcha';
 import SelectInput from '../core-components/input/selectInput';
+import SubmitInput from '../core-components/input/submitInput';
 import TextInput from '../core-components/input/textInput';
 import { useTranslation } from 'react-i18next';
 import React, { Fragment, FunctionComponent, useEffect, useId, useRef, useState } from 'react';
@@ -49,6 +50,7 @@ const Contact: FunctionComponent = () => {
             event.preventDefault();
         }
         else {
+            
             const instance = axios.create({
                 baseURL: 'http://localhost:8000/api/mail/',
                 timeout: 5000,
@@ -140,7 +142,7 @@ const Contact: FunctionComponent = () => {
             <div className='row'>
                 <ToastContainer />
                 <h1 className='text-center'>{t('contact.title')}</h1>
-                <form className='d-flex flex-row flex-wrap justify-content-between mt-4'>
+                <form className='d-flex flex-row flex-wrap justify-content-between mt-4' onSubmit={handleSubmit}>
                     <TextInput label={t('contact.input.firstname*')} name={id + 'firstname'} RegExp={/^[ .A-Za-zÄÖÜßäöü\-]+$/u} parentCallback={callbackFunction} required={true} />
                     <TextInput label={t('contact.input.lastname*')} name={id + 'lastname'} RegExp={/^[ .A-Za-zÄÖÜßäöü\-]+$/u} parentCallback={callbackFunction} required={true} />
                     <TextInput label={t('contact.input.street')} name={id + 'street'} RegExp={/^[\d .A-Za-zÄÖÜßäöü\-]+$/u} parentCallback={callbackFunction} required={false} />
@@ -149,11 +151,12 @@ const Contact: FunctionComponent = () => {
                     <SelectInput label={t('contact.input.countryselection')} name={id + 'countryselection'} auswahl={countries} parentCallback={callbackFunction} />
                     <SelectInput label={t('contact.input.state')} name={id + 'state'} auswahl={provinz} parentCallback={callbackFunction} />
                     <TextInput label={t('contact.input.phone')} name={id + 'phone'} RegExp={/^[0-9\-]+$/u} parentCallback={callbackFunction} required={true} />
-                    <TextInput label={t('contact.input.mail')} name={id + 'mail'} RegExp={/^[]+$/u} parentCallback={callbackFunction} required={true} />
-                    <CheckInput label={t('contact.input.privacy')} name={id + 'privacy'} parentCallback={callbackFunction} />
+                    <TextInput label={t('contact.input.mail')} name={id + 'mail'} parentCallback={callbackFunction} required={true} />
+                    <CheckInput label={t('contact.input.privacy')} name={id + 'privacy'} parentCallback={callbackFunction} required={true} />
                     <div className='form-group col-12 mt-4 mb-4'>
                         <Reaptcha sitekey='6Lf6NrEhAAAAAHVrsoBNfgsvzMmoQqvA9qnX2pzj' ref={captchaRef} onVerify={handleVerify} />
                     </div>
+                    <SubmitInput name={id + 'sendmail'} value="test" />
                     <ButtonInput className='btn btn-primary' name={id + 'mailsend'} value={t('contact.input.sendmessage')} onClick={handleSubmit} />
                 </form>
             </div>
