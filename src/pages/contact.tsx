@@ -1,11 +1,10 @@
 import axios from 'axios';
 import ButtonInput from "../core-components/input/buttonInput";
 import CheckInput from '../core-components/input/checkInput';
-import LanguageButton from '../core-components/sections/languageButton';
+import Footer from '../core-components/sections/footer';
 import Navigation from '../core-components/sections/navigation';
 import Reaptcha from 'reaptcha';
 import SelectInput from '../core-components/input/selectInput';
-import SubmitInput from '../core-components/input/submitInput';
 import TextInput from '../core-components/input/textInput';
 import { useTranslation } from 'react-i18next';
 import React, { Fragment, FunctionComponent, useEffect, useId, useRef, useState } from 'react';
@@ -151,9 +150,16 @@ const Contact: FunctionComponent = () => {
         <TextInput label={t('contact.input.' + key[0])} name={id + key[0]} RegExp={key[1]} parentCallback={callbackFunction} required={key[2]} />
     );
 
-    const formselectlist = formselectitems.map((key: string | boolean | RegExp | Array<any>) =>
+    const formselectlist = formselectitems.map((key: string|Array<any>) =>
         <SelectInput label={t('contact.input.' + key[0])} name={id + key[0]} auswahl={key[1]} parentCallback={callbackFunction} />
     );
+
+    const formchecklist = <CheckInput label={t('contact.input.privacy')} name={id + 'privacy'} parentCallback={callbackFunction} required={false} />;
+
+    const formrecaptcha =
+        <div className='form-group col-12 mt-4 mb-4'>
+            <Reaptcha sitekey='6Lf6NrEhAAAAAHVrsoBNfgsvzMmoQqvA9qnX2pzj' ref={captchaRef} onVerify={handleVerify} />
+        </div>;
 
     return (
         <Fragment>
@@ -164,16 +170,12 @@ const Contact: FunctionComponent = () => {
                 <div className='d-flex flex-row flex-wrap justify-content-between mt-4'>
                     { formtextlist }
                     { formselectlist }
-                    <CheckInput label={t('contact.input.privacy')} name={id + 'privacy'} parentCallback={callbackFunction} required={false} />
-                    <div className='form-group col-12 mt-4 mb-4'>
-                        <Reaptcha sitekey='6Lf6NrEhAAAAAHVrsoBNfgsvzMmoQqvA9qnX2pzj' ref={captchaRef} onVerify={handleVerify} />
-                    </div>
+                    { formchecklist }
+                    { formrecaptcha }
                     <ButtonInput className='btn btn-primary' name={id + 'mailsend'} value={t('contact.input.sendmessage')} onClick={handleSubmit} />
                 </div>
             </div>
-            <div className='footer'>
-                <LanguageButton />
-            </div>
+            <Footer />
         </Fragment>
     );
 };
