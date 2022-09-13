@@ -14,8 +14,6 @@ import { toast, ToastContainer } from 'react-toastify';
 const Contact: FunctionComponent = () => {
     const [forminput, setFormInput] = useState<Array<string>>([]);
     const [inputrequired, setInputRequired] = useState<Array<string>>([]);
-    const countries = ['Auswahl', 'Deutschland', 'Polen', 'Österreich', 'Schweiz', 'Frankreich'];
-    const provinz = ['Auswahl', 'Berlin', 'Brandenburg', 'Sachsen', 'Hessen', 'Bremen'];
     const [t, i18n] = useTranslation('common');
     const captchaRef = useRef<Reaptcha>(null);
     const [token, setToken] = useState<string>('');
@@ -23,6 +21,20 @@ const Contact: FunctionComponent = () => {
     const [connerror, setConnError] = useState();
     const [count, setCount] = useState<number>(0);
     const id = useId();
+
+    const formtextitems = [
+        ['firstname', '/^[ .A-Za-zÄÖÜßäöü\-]+$/u', true],
+        ['lastname', '/^[ .A-Za-zÄÖÜßäöü\-]+$/u', true],
+        ['street', '/^[\d .A-Za-zÄÖÜßäöü\-]+$/u', false],
+        ['zip', '/^[\d ]+$/u', false],
+        ['location', '/^[ .A-Za-zÄÖÜßäöü\-]+$/u', false],
+        ['phone', '/^[0-9\-]+$/u', false],
+        ['mail', '', false]
+    ];
+    const formselectitems = [
+        ['countryselection', ['Auswahl', 'Deutschland', 'Polen', 'Österreich', 'Schweiz', 'Frankreich']],
+        ['state', ['Auswahl', 'Berlin', 'Brandenburg', 'Sachsen', 'Hessen', 'Bremen']]
+    ];
 
     const callbackFunction = (inputname: string, inputvalue: string | boolean, inputrequired: string): void => {
         const name: string = inputname;
@@ -50,7 +62,6 @@ const Contact: FunctionComponent = () => {
             event.preventDefault();
         }
         else {
-            
             const instance = axios.create({
                 baseURL: 'http://localhost:8000/api/mail/',
                 timeout: 5000,
@@ -136,29 +147,29 @@ const Contact: FunctionComponent = () => {
         console.log(inputrequired);
     });
 
+    const formtextlist = formtextitems.map((key: string|boolean|RegExp|Array<any>) =>
+        <TextInput label={t('contact.input.' + key[0])} name={id + key[0]} RegExp={key[1]} parentCallback={callbackFunction} required={key[2]} />
+    );
+
+    const formselectlist = formselectitems.map((key: string | boolean | RegExp | Array<any>) =>
+        <SelectInput label={t('contact.input.' + key[0])} name={id + key[0]} auswahl={key[1]} parentCallback={callbackFunction} />
+    );
+
     return (
         <Fragment>
             <Navigation />
             <div className='row'>
                 <ToastContainer />
                 <h1 className='text-center'>{t('contact.title')}</h1>
-                <form className='d-flex flex-row flex-wrap justify-content-between mt-4' onSubmit={handleSubmit}>
-                    <TextInput label={t('contact.input.firstname*')} name={id + 'firstname'} RegExp={/^[ .A-Za-zÄÖÜßäöü\-]+$/u} parentCallback={callbackFunction} required={true} />
-                    <TextInput label={t('contact.input.lastname*')} name={id + 'lastname'} RegExp={/^[ .A-Za-zÄÖÜßäöü\-]+$/u} parentCallback={callbackFunction} required={true} />
-                    <TextInput label={t('contact.input.street')} name={id + 'street'} RegExp={/^[\d .A-Za-zÄÖÜßäöü\-]+$/u} parentCallback={callbackFunction} required={false} />
-                    <TextInput label={t('contact.input.zip')} name={id + 'zip'} RegExp={/^[\d ]+$/u} parentCallback={callbackFunction} required={false} />
-                    <TextInput label={t('contact.input.location')} name={id + 'location'} RegExp={/^[ .A-Za-zÄÖÜßäöü\-]+$/u} parentCallback={callbackFunction} required={false} />
-                    <SelectInput label={t('contact.input.countryselection')} name={id + 'countryselection'} auswahl={countries} parentCallback={callbackFunction} />
-                    <SelectInput label={t('contact.input.state')} name={id + 'state'} auswahl={provinz} parentCallback={callbackFunction} />
-                    <TextInput label={t('contact.input.phone')} name={id + 'phone'} RegExp={/^[0-9\-]+$/u} parentCallback={callbackFunction} required={true} />
-                    <TextInput label={t('contact.input.mail')} name={id + 'mail'} parentCallback={callbackFunction} required={true} />
-                    <CheckInput label={t('contact.input.privacy')} name={id + 'privacy'} parentCallback={callbackFunction} required={true} />
+                <div className='d-flex flex-row flex-wrap justify-content-between mt-4'>
+                    { formtextlist }
+                    { formselectlist }
+                    <CheckInput label={t('contact.input.privacy')} name={id + 'privacy'} parentCallback={callbackFunction} required={false} />
                     <div className='form-group col-12 mt-4 mb-4'>
                         <Reaptcha sitekey='6Lf6NrEhAAAAAHVrsoBNfgsvzMmoQqvA9qnX2pzj' ref={captchaRef} onVerify={handleVerify} />
                     </div>
-                    <SubmitInput name={id + 'sendmail'} value="test" />
                     <ButtonInput className='btn btn-primary' name={id + 'mailsend'} value={t('contact.input.sendmessage')} onClick={handleSubmit} />
-                </form>
+                </div>
             </div>
             <div className='footer'>
                 <LanguageButton />

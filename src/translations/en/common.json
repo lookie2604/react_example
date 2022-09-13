@@ -14,8 +14,8 @@
     "contact": {
         "title": "Contact Form",
         "input": {
-            "firstname*": "Firstname*",
-            "lastname*": "Lastname*",
+            "firstname": "Firstname",
+            "lastname": "Lastname",
             "street": "Street and house number",
             "zip": "Zip",
             "location": "Location",

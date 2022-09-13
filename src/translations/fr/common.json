@@ -14,8 +14,8 @@
     "contact": {
         "title": "Formulaire de contact",
         "input": {
-            "firstname*": "Prénom*",
-            "lastname*": "Nom de famille*",
+            "firstname": "Prénom",
+            "lastname": "Nom de famille",
             "street": "Rue et numéro de maison",
             "zip": "Code postal",
             "location": "Emplacement",

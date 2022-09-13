@@ -11,8 +11,10 @@ const SelectInput: FunctionComponent<SelectInputProps> = ({ label, name, auswahl
     const selectioninput: string[] = auswahl;
     const [selectionvalue, setSelectionValue] = useState<string>('');
 
-    const listItems = selectioninput.map(number =>
-        <option key={number.toString()} value={number.toString()}>{number}</option>);
+    const listItems = selectioninput.map(
+        (value) =>
+            <option key={value.toString()} value={value.toString()}>{value}</option>
+    );
 
     const handleChange = event => {
         setSelectionValue(event.target.value);

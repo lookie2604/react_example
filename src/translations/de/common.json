@@ -14,8 +14,8 @@
     "contact": {
         "title": "Kontaktformular",
         "input": {
-            "firstname*": "Vorname*",
-            "lastname*": "Nachname*",
+            "firstname": "Vorname",
+            "lastname": "Nachname",
             "street": "Straße und Hausnummer",
             "zip": "PLZ",
             "location": "Ort",

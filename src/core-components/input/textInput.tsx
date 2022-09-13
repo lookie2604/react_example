@@ -15,6 +15,7 @@ const TextInput: FunctionComponent<TextInputProps> = ({ label, name, RegExp, par
     const [message, setMessage] = useState<string>('');
     const [requiredInput, setRequiredInput] = useState<boolean>(false);
     const pattern: RegExp|undefined = RegExp;
+    const inputlabel = label + (required == true ? '*' : '');
 
     const handleChange = (event) => {
         if(pattern){
@@ -47,7 +48,7 @@ const TextInput: FunctionComponent<TextInputProps> = ({ label, name, RegExp, par
 
     return (
         <div className='form-group col-6'>
-            <label htmlFor={`${name}input`}>{label}</label>
+            <label htmlFor={`${name}input`}>{inputlabel}</label>
             <input type='text' className='form-control' id={`${name}input`} name={name} value={inputvalue} onChange={handleChange} onBlur={handleBlur} required={required} />
             <Message name={`error_${name}`} error={message} />
         </div>
