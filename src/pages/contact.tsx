@@ -140,7 +140,7 @@ const Contact: FunctionComponent = () => {
             <div className='row'>
                 <ToastContainer />
                 <h1 className='text-center'>{t('contact.title')}</h1>
-                <div className='d-flex flex-row flex-wrap justify-content-between mt-4'>
+                <form className='d-flex flex-row flex-wrap justify-content-between mt-4'>
                     <TextInput label={t('contact.input.firstname*')} name={id + 'firstname'} RegExp={/^[ .A-Za-zÄÖÜßäöü\-]+$/u} parentCallback={callbackFunction} required={true} />
                     <TextInput label={t('contact.input.lastname*')} name={id + 'lastname'} RegExp={/^[ .A-Za-zÄÖÜßäöü\-]+$/u} parentCallback={callbackFunction} required={true} />
                     <TextInput label={t('contact.input.street')} name={id + 'street'} RegExp={/^[\d .A-Za-zÄÖÜßäöü\-]+$/u} parentCallback={callbackFunction} required={false} />
@@ -155,7 +155,7 @@ const Contact: FunctionComponent = () => {
                         <Reaptcha sitekey='6Lf6NrEhAAAAAHVrsoBNfgsvzMmoQqvA9qnX2pzj' ref={captchaRef} onVerify={handleVerify} />
                     </div>
                     <ButtonInput className='btn btn-primary' name={id + 'mailsend'} value={t('contact.input.sendmessage')} onClick={handleSubmit} />
-                </div>
+                </form>
             </div>
             <div className='footer'>
                 <LanguageButton />
