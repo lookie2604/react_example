@@ -19,7 +19,7 @@ const Contact: FunctionComponent = () => {
     const captchaRef = useRef<Reaptcha>(null);
     const [token, setToken] = useState<string>('');
     const [mail, setMail] = useState<boolean>();
-    const [error, setError] = useState();
+    const [connerror, setConnError] = useState();
     const [count, setCount] = useState<number>(0);
     const id = useId();
 
@@ -96,17 +96,17 @@ const Contact: FunctionComponent = () => {
                         // console.log(error.response.data);
                         // console.log(error.response.status);
                         // console.log(error.response.headers);
-                        setError(error.response.data);
+                        setConnError(error.response.data);
                     } else if (error.request) {
                         // console.log(error.request);
-                        setError(error.request);
+                        setConnError(error.request);
                     } else {
                         // console.log('Error', error.message);
-                        setError(error.message.sent);
+                        setConnError(error.message.sent);
                     }
                     // console.log(error.config);
-                    if (error) {
-                        toast.error(error, {
+                    if (connerror) {
+                        toast.error(connerror, {
                             position: "top-center",
                             autoClose: 7000,
                             hideProgressBar: false,
