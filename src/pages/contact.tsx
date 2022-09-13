@@ -31,8 +31,14 @@ const Contact: FunctionComponent = () => {
         ['mail', '', false]
     ];
     const formselectitems = [
-        ['countryselection', ['Auswahl', 'Deutschland', 'Polen', 'Österreich', 'Schweiz', 'Frankreich']],
-        ['state', ['Auswahl', 'Berlin', 'Brandenburg', 'Sachsen', 'Hessen', 'Bremen']]
+        [
+            'countryselection',
+            ['Auswahl', 'Deutschland', 'Polen', 'Österreich', 'Schweiz', 'Frankreich']
+        ],
+        [
+            'state',
+            ['Auswahl', 'Berlin', 'Brandenburg', 'Sachsen', 'Hessen', 'Bremen']
+        ]
     ];
 
     const callbackFunction = (inputname: string, inputvalue: string | boolean, inputrequired: string): void => {
@@ -146,11 +152,11 @@ const Contact: FunctionComponent = () => {
         console.log(inputrequired);
     });
 
-    const formtextlist = formtextitems.map((key: string|boolean|RegExp|Array<any>) =>
+    const formtextlist = formtextitems.map((key: string | boolean | RegExp | Array<any>) =>
         <TextInput label={t('contact.input.' + key[0])} name={id + key[0]} RegExp={key[1]} parentCallback={callbackFunction} required={key[2]} />
     );
 
-    const formselectlist = formselectitems.map((key: string|Array<any>) =>
+    const formselectlist = formselectitems.map((key: string | Array<any>) =>
         <SelectInput label={t('contact.input.' + key[0])} name={id + key[0]} auswahl={key[1]} parentCallback={callbackFunction} />
     );
 
