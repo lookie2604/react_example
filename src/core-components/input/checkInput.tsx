@@ -1,5 +1,5 @@
-import React, { FunctionComponent, ReactElement, useEffect, useState } from 'react';
 import Message from '../notification/message';
+import React, { FunctionComponent, ReactElement, useEffect, useState } from 'react';
 
 interface CheckInputProps {
     label: string;
