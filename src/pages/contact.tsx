@@ -27,8 +27,8 @@ const Contact: FunctionComponent = () => {
         ['street', /^[\d .A-Za-zÄÖÜßäöü\-]+$/u, false],
         ['zip', /^[\d ]+$/u, false],
         ['location', /^[ .A-Za-zÄÖÜßäöü\-]+$/u, false],
-        ['phone', /^[0-9\-]+$/u, true],
-        ['mail', /^[]+$/u, true]
+        ['phone', /^[0-9\-]+$/u, false],
+        ['mail', /^\S+@\S+\.\S+$/u, false]
     ];
     const formselectitems: (string | string[])[][] = [
         [
@@ -56,6 +56,12 @@ const Contact: FunctionComponent = () => {
             setCount(initialstate);
         }
 
+        if (forminput[id + inputname] !== undefined && forminput[id + inputname] !== null){
+            if (inputname == id + 'privacy' && inputvalue != true){
+                setCount(count + 1);
+            }
+        }
+
         formtextitems.map((item: string | boolean | RegExp | Array<any>) => {
             if (forminput[id + item[0]] !== undefined && forminput[id + item[0]] !== null) {
                 if (forminput[id + item[0]] == "" && item[2] == true) {
@@ -75,7 +81,7 @@ const Contact: FunctionComponent = () => {
             event.preventDefault();
             toast.error('Bitte bestätigen Sie das reCaptcha!', {
                 position: "top-center",
-                autoClose: 7000,
+                autoClose: 5000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,
@@ -84,7 +90,7 @@ const Contact: FunctionComponent = () => {
             });
         }
         else {
-            if (count == 0) {
+            if (token && count == 0) {
                 const instance = axios.create({
                     baseURL: 'http://localhost:8000/api/mail/',
                     timeout: 5000,
@@ -103,7 +109,7 @@ const Contact: FunctionComponent = () => {
                         if (mail) {
                             toast.success(t('contact.message.success'), {
                                 position: "top-center",
-                                autoClose: 7000,
+                                autoClose: 5000,
                                 hideProgressBar: false,
                                 closeOnClick: true,
                                 pauseOnHover: true,
@@ -114,7 +120,7 @@ const Contact: FunctionComponent = () => {
                         else {
                             toast.error('Bitte füllen Sie alle erforderlichen Felder aus!', {
                                 position: "top-center",
-                                autoClose: 7000,
+                                autoClose: 5000,
                                 hideProgressBar: false,
                                 closeOnClick: true,
                                 pauseOnHover: true,
@@ -142,7 +148,7 @@ const Contact: FunctionComponent = () => {
                         if (connerror) {
                             toast.error(connerror, {
                                 position: "top-center",
-                                autoClose: 7000,
+                                autoClose: 5000,
                                 hideProgressBar: false,
                                 closeOnClick: true,
                                 pauseOnHover: true,
@@ -156,7 +162,7 @@ const Contact: FunctionComponent = () => {
             else {
                 toast.error('Bitte füllen Sie alle erforderlichen Felder aus!', {
                     position: "top-center",
-                    autoClose: 7000,
+                    autoClose: 5000,
                     hideProgressBar: false,
                     closeOnClick: true,
                     pauseOnHover: true,
@@ -177,7 +183,7 @@ const Contact: FunctionComponent = () => {
 
     useEffect(() => {
         console.log(count);
-    }, [count]);
+    });
 
     const formtextlist: JSX.Element[] = formtextitems.map((item: string | boolean | RegExp | Array<any>, index) =>
         <TextInput key={index} label={t('contact.input.' + item[0])} name={id + item[0]} RegExp={item[1]} parentCallback={callbackFunction} required={item[2]} />

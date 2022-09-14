@@ -11,7 +11,7 @@ interface CheckInputProps {
 const CheckInput: FunctionComponent<CheckInputProps> = ({ label, name, parentCallback, required }): ReactElement => {
     const [input, setInput] = useState<boolean>(false);
     const [message, setMessage] = useState<string>('');
-    const [requiredInput, setRequiredInput] = useState<boolean>(required);
+    const [requiredInput, setRequiredInput] = useState<boolean>(false);
 
     const handleChange = event => {
         setInput(event.target.checked);
