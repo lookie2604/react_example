@@ -27,8 +27,8 @@ const Contact: FunctionComponent = () => {
         ['street', /^[\d .A-Za-zÄÖÜßäöü\-]+$/u, false],
         ['zip', /^[\d ]+$/u, false],
         ['location', /^[ .A-Za-zÄÖÜßäöü\-]+$/u, false],
-        ['phone', /^[0-9\-]+$/u, false],
-        ['mail', /^[]+$/u, false]
+        ['phone', /^[0-9\-]+$/u, true],
+        ['mail', /^[]+$/u, true]
     ];
     const formselectitems: (string | string[])[][] = [
         [
@@ -187,7 +187,7 @@ const Contact: FunctionComponent = () => {
         <SelectInput label={t('contact.input.' + item[0])} name={id + item[0]} auswahl={item[1]} parentCallback={callbackFunction} />
     );
 
-    const formchecklist: JSX.Element = <CheckInput label={t('contact.input.privacy')} name={id + 'privacy'} parentCallback={callbackFunction} required={false} />;
+    const formchecklist: JSX.Element = <CheckInput label={t('contact.input.privacy')} name={id + 'privacy'} parentCallback={callbackFunction} required={true} />;
 
     const formrecaptcha: JSX.Element =
         <div className='form-group col-12 mt-4 mb-4'>
