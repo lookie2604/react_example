@@ -14,9 +14,16 @@ const CheckInput: FunctionComponent<CheckInputProps> = ({ label, name, parentCal
     const [requiredInput, setRequiredInput] = useState<boolean>(false);
 
     const handleChange = event => {
-        setInput(event.target.checked);
-        parentCallback(name, event.target.checked);
-        setRequiredInput(false);
+        if (event.target.checked) {
+            setInput(event.target.checked);
+            parentCallback(name, event.target.checked);
+            setRequiredInput(false);
+        }
+        else{
+            setInput(event.target.checked);
+            parentCallback(name, event.target.checked);
+            setRequiredInput(true);
+        }
     };
 
     useEffect(() => {
