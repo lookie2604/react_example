@@ -12,25 +12,25 @@ import { toast, ToastContainer } from 'react-toastify';
 
 const Contact: FunctionComponent = () => {
     const [forminput, setFormInput] = useState<Array<string>>([]);
-    const [inputrequired, setInputRequired] = useState<Array<string>>([]);
     const [t, i18n] = useTranslation('common');
     const captchaRef = useRef<Reaptcha>(null);
     const [token, setToken] = useState<string>('');
     const [mail, setMail] = useState<boolean>();
     const [connerror, setConnError] = useState();
-    const [count, setCount] = useState<number>(0);
-    const id = useId();
+    const initialstate = 0;
+    const [count, setCount] = useState(initialstate);
+    const id: string = useId();
 
-    const formtextitems = [
-        ['firstname', '/^[ .A-Za-zÄÖÜßäöü\-]+$/u', true],
-        ['lastname', '/^[ .A-Za-zÄÖÜßäöü\-]+$/u', true],
-        ['street', '/^[\d .A-Za-zÄÖÜßäöü\-]+$/u', false],
-        ['zip', '/^[\d ]+$/u', false],
-        ['location', '/^[ .A-Za-zÄÖÜßäöü\-]+$/u', false],
-        ['phone', '/^[0-9\-]+$/u', false],
-        ['mail', '', false]
+    const formtextitems: (string | boolean | RegExp)[][] = [
+        ['firstname', /^[ .A-Za-zÄÖÜßäöü\-]+$/u, true],
+        ['lastname', /^[ .A-Za-zÄÖÜßäöü\-]+$/u, true],
+        ['street', /^[\d .A-Za-zÄÖÜßäöü\-]+$/u, false],
+        ['zip', /^[\d ]+$/u, false],
+        ['location', /^[ .A-Za-zÄÖÜßäöü\-]+$/u, false],
+        ['phone', /^[0-9\-]+$/u, false],
+        ['mail', /^[]+$/u, false]
     ];
-    const formselectitems = [
+    const formselectitems: (string | string[])[][] = [
         [
             'countryselection',
             ['Auswahl', 'Deutschland', 'Polen', 'Österreich', 'Schweiz', 'Frankreich']
@@ -41,18 +41,9 @@ const Contact: FunctionComponent = () => {
         ]
     ];
 
-    const callbackFunction = (inputname: string, inputvalue: string | boolean, inputrequired: string): void => {
+    const callbackFunction = (inputname: string, inputvalue: string | boolean): void => {
         const name: string = inputname;
         const value: string | boolean = inputvalue;
-
-        setInputRequired(
-            prevState => (
-                {
-                    ...prevState,
-                    [name]: inputrequired
-                }
-            )
-        );
 
         setFormInput(
             prevState => (
@@ -67,75 +58,106 @@ const Contact: FunctionComponent = () => {
             event.preventDefault();
         }
         else {
-            const instance = axios.create({
-                baseURL: 'http://localhost:8000/api/mail/',
-                timeout: 5000,
-                headers: { 'Content-Type': 'application/json' },
-                withCredentials: false,
-                maxContentLength: 5000,
-                maxBodyLength: 5000,
+            formtextitems.map((item: string | boolean | RegExp | Array<any>) => {
+                console.log(forminput[id + item[0]]);
+                console.log(item[2]);
+                if (forminput[id + item[0]] !== undefined && forminput[id + item[0]] !== null) {
+                    if (forminput[id + item[0]] == "" && item[2] == true) {
+                        setCount((prevstate) => prevstate + 1);
+                        console.log("nummer 1");
+                        console.log(count);
+                    }
+                }
+                else{
+                    if (item[2] == true) {
+                        setCount((prevstate) => prevstate + 1);
+                        console.log("nummer 2");
+                        console.log(count);
+                    }
+                }
             });
-           
-            instance.post(
-                'http://localhost:8000/api/mail/',
-                forminput
-            )
-                .then((response) => {
-                    setMail(response.data.sent);
-                    if (mail) {
-                        toast.success(t('contact.message.success'), {
-                            position: "top-center",
-                            autoClose: 7000,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                        });
-                    }
-                    else {
-                        toast.error('Bitte füllen Sie alle erforderlichen Felder aus!', {
-                            position: "top-center",
-                            autoClose: 7000,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                        });
-                    }
-                    // console.log(response.status);
-                    // console.log(response.statusText);
-                    // console.log(response.headers);
-                    // console.log(response.config);
-                })
-                .catch((error) => {
-                    if (error.response) {
-                        // console.log(error.response.data);
-                        // console.log(error.response.status);
-                        // console.log(error.response.headers);
-                        setConnError(error.response.data);
-                    } else if (error.request) {
-                        // console.log(error.request);
-                        setConnError(error.request);
-                    } else {
-                        // console.log('Error', error.message);
-                        setConnError(error.message.sent);
-                    }
-                    // console.log(error.config);
-                    if (connerror) {
-                        toast.error(connerror, {
-                            position: "top-center",
-                            autoClose: 7000,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                        });
-                    }
-                    else { }
+            console.log(count);
+
+            if(count == 0){
+                const instance = axios.create({
+                    baseURL: 'http://localhost:8000/api/mail/',
+                    timeout: 5000,
+                    headers: { 'Content-Type': 'application/json' },
+                    withCredentials: false,
+                    maxContentLength: 5000,
+                    maxBodyLength: 5000,
                 });
+
+                instance.post(
+                    'http://localhost:8000/api/mail/',
+                    forminput
+                )
+                    .then((response) => {
+                        setMail(response.data.sent);
+                        if (mail) {
+                            toast.success(t('contact.message.success'), {
+                                position: "top-center",
+                                autoClose: 7000,
+                                hideProgressBar: false,
+                                closeOnClick: true,
+                                pauseOnHover: true,
+                                draggable: true,
+                                progress: undefined,
+                            });
+                        }
+                        else {
+                            toast.error('Bitte füllen Sie alle erforderlichen Felder aus!', {
+                                position: "top-center",
+                                autoClose: 7000,
+                                hideProgressBar: false,
+                                closeOnClick: true,
+                                pauseOnHover: true,
+                                draggable: true,
+                                progress: undefined,
+                            });
+                        }
+                        // console.log(response.status);
+                        // console.log(response.statusText);
+                        // console.log(response.headers);
+                        // console.log(response.config);
+                    })
+                    .catch((error) => {
+                        if (error.response) {
+                            // console.log(error.response.data);
+                            // console.log(error.response.status);
+                            // console.log(error.response.headers);
+                            setConnError(error.response.data);
+                        } else if (error.request) {
+                            setConnError(error.request);
+                        } else {
+                            setConnError(error.message.sent);
+                        }
+                        // console.log(error.config);
+                        if (connerror) {
+                            toast.error(connerror, {
+                                position: "top-center",
+                                autoClose: 7000,
+                                hideProgressBar: false,
+                                closeOnClick: true,
+                                pauseOnHover: true,
+                                draggable: true,
+                                progress: undefined,
+                            });
+                        }
+                        else { }
+                    });
+            }
+            else{
+                toast.error('Bitte füllen Sie alle erforderlichen Felder aus!', {
+                    position: "top-center",
+                    autoClose: 7000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            }
         }
     };
 
@@ -148,21 +170,21 @@ const Contact: FunctionComponent = () => {
     };
 
     useEffect(() => {
-        console.log(forminput);
-        console.log(inputrequired);
+        //console.log(forminput);
+        //console.log(inputrequired);
     });
 
-    const formtextlist = formtextitems.map((key: string | boolean | RegExp | Array<any>) =>
-        <TextInput label={t('contact.input.' + key[0])} name={id + key[0]} RegExp={key[1]} parentCallback={callbackFunction} required={key[2]} />
+    const formtextlist: JSX.Element[] = formtextitems.map((item: string | boolean | RegExp | Array<any>, index) =>
+        <TextInput key={index} label={t('contact.input.' + item[0])} name={id + item[0]} RegExp={item[1]} parentCallback={callbackFunction} required={item[2]} />
     );
 
-    const formselectlist = formselectitems.map((key: string | Array<any>) =>
-        <SelectInput label={t('contact.input.' + key[0])} name={id + key[0]} auswahl={key[1]} parentCallback={callbackFunction} />
+    const formselectlist: JSX.Element[] = formselectitems.map((item: string | Array<any>) =>
+        <SelectInput label={t('contact.input.' + item[0])} name={id + item[0]} auswahl={item[1]} parentCallback={callbackFunction} />
     );
 
-    const formchecklist = <CheckInput label={t('contact.input.privacy')} name={id + 'privacy'} parentCallback={callbackFunction} required={false} />;
+    const formchecklist: JSX.Element = <CheckInput label={t('contact.input.privacy')} name={id + 'privacy'} parentCallback={callbackFunction} required={false} />;
 
-    const formrecaptcha =
+    const formrecaptcha: JSX.Element =
         <div className='form-group col-12 mt-4 mb-4'>
             <Reaptcha sitekey='6Lf6NrEhAAAAAHVrsoBNfgsvzMmoQqvA9qnX2pzj' ref={captchaRef} onVerify={handleVerify} />
         </div>;

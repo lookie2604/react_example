@@ -10,23 +10,18 @@ interface CheckInputProps {
 
 const CheckInput: FunctionComponent<CheckInputProps> = ({ label, name, parentCallback, required }): ReactElement => {
     const [input, setInput] = useState<boolean>(false);
-    const [error, setError] = useState<boolean>(false);
     const [message, setMessage] = useState<string>('');
-    const [requiredInput, setRequiredInput] = useState<boolean>(false);
+    const [requiredInput, setRequiredInput] = useState<boolean>(required);
 
     const handleChange = event => {
-        if (event.target.required === true) {
-            setInput(event.target.checked);
-            parentCallback(name, event.target.checked);
-        }
-        else {
-            setError(true);
-        }
+        setInput(event.target.checked);
+        parentCallback(name, event.target.checked);
+        setRequiredInput(false);
     };
 
     useEffect(() => {
         setTimeout(() => {
-            setMessage(error ? 'Es liegt ein Fehler vor!' : requiredInput ? 'Dieses Feld ist erforderlich!' : '');
+            setMessage(requiredInput ? 'Dieses Feld ist erforderlich!' : '');
         }, 500);
     });
 

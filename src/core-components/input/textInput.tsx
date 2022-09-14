@@ -4,7 +4,7 @@ import React, { FunctionComponent, ReactElement, useEffect, useState } from 'rea
 interface TextInputProps {
     label: string;
     name: string;
-    RegExp?: RegExp|undefined;
+    RegExp: RegExp;
     parentCallback: Function;
     required: boolean;
 }
@@ -14,17 +14,15 @@ const TextInput: FunctionComponent<TextInputProps> = ({ label, name, RegExp, par
     const [error, setError] = useState<boolean>(false);
     const [message, setMessage] = useState<string>('');
     const [requiredInput, setRequiredInput] = useState<boolean>(false);
-    const pattern: RegExp|undefined = RegExp;
+    const pattern = RegExp;
     const inputlabel = label + (required == true ? '*' : '');
 
     const handleChange = (event) => {
-        if(pattern){
-            if (pattern.test(event.target.value) && event.target.value !== '' && event.target.required === true) {
-                setError(false);
-                parentCallback(name, event.target.value, '');
-            } else {
-                setError(true);
-            }
+        if (pattern.test(event.target.value) && event.target.value !== '' && event.target.required === true) {
+            setError(false);
+            parentCallback(name, event.target.value, '');
+        } else {
+            setError(true);
         }
         setInputValue(event.target.value);
     };
@@ -32,11 +30,11 @@ const TextInput: FunctionComponent<TextInputProps> = ({ label, name, RegExp, par
     const handleBlur = (event) => {
         if (event.target.value === '' && event.target.required === true){
             setRequiredInput(true);
-            parentCallback(name, event.target.value, 'empty');
+            parentCallback(name, event.target.value);
         }
         else{
             setRequiredInput(false);
-            parentCallback(name, event.target.value, '');
+            parentCallback(name, event.target.value);
         }
     };
 
