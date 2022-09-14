@@ -182,7 +182,7 @@ const Contact: FunctionComponent = () => {
     };
 
     useEffect(() => {
-        console.log(count);
+        //console.log(count);
     });
 
     const formtextlist: JSX.Element[] = formtextitems.map((item: string | boolean | RegExp | Array<any>, index) =>
