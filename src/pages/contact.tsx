@@ -51,34 +51,40 @@ const Contact: FunctionComponent = () => {
                     [name]: value }
             )
         );
+
+        if(count > 0){
+            setCount(initialstate);
+        }
+
+        formtextitems.map((item: string | boolean | RegExp | Array<any>) => {
+            if (forminput[id + item[0]] !== undefined && forminput[id + item[0]] !== null) {
+                if (forminput[id + item[0]] == "" && item[2] == true) {
+                    setCount(count + 1);
+                }
+            }
+            else {
+                if (item[2] == true) {
+                    setCount(count + 1);
+                }
+            }
+        });
     };
 
     const handleSubmit= (event) => {
         if (!token) {
             event.preventDefault();
+            toast.error('Bitte bestätigen Sie das reCaptcha!', {
+                position: "top-center",
+                autoClose: 7000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
         }
         else {
-            formtextitems.map((item: string | boolean | RegExp | Array<any>) => {
-                console.log(forminput[id + item[0]]);
-                console.log(item[2]);
-                if (forminput[id + item[0]] !== undefined && forminput[id + item[0]] !== null) {
-                    if (forminput[id + item[0]] == "" && item[2] == true) {
-                        setCount((prevstate) => prevstate + 1);
-                        console.log("nummer 1");
-                        console.log(count);
-                    }
-                }
-                else{
-                    if (item[2] == true) {
-                        setCount((prevstate) => prevstate + 1);
-                        console.log("nummer 2");
-                        console.log(count);
-                    }
-                }
-            });
-            console.log(count);
-
-            if(count == 0){
+            if (count == 0) {
                 const instance = axios.create({
                     baseURL: 'http://localhost:8000/api/mail/',
                     timeout: 5000,
@@ -147,7 +153,7 @@ const Contact: FunctionComponent = () => {
                         else { }
                     });
             }
-            else{
+            else {
                 toast.error('Bitte füllen Sie alle erforderlichen Felder aus!', {
                     position: "top-center",
                     autoClose: 7000,
@@ -170,9 +176,8 @@ const Contact: FunctionComponent = () => {
     };
 
     useEffect(() => {
-        //console.log(forminput);
-        //console.log(inputrequired);
-    });
+        console.log(count);
+    }, [count]);
 
     const formtextlist: JSX.Element[] = formtextitems.map((item: string | boolean | RegExp | Array<any>, index) =>
         <TextInput key={index} label={t('contact.input.' + item[0])} name={id + item[0]} RegExp={item[1]} parentCallback={callbackFunction} required={item[2]} />
