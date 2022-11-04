@@ -107,7 +107,7 @@ const Contact: FunctionComponent = () => {
                     .then((response) => {
                         setMail(response.data.sent);
                         if (mail) {
-                            toast.success(t('contact.message.success'), {
+                            toast.success('Nachricht erfolgreich versendet!', {
                                 position: "top-center",
                                 autoClose: 5000,
                                 hideProgressBar: false,
